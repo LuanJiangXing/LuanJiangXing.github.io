@@ -1,0 +1,77 @@
+.VPHero .name {
+  font-weight: 800;
+  background: linear-gradient(135deg, #646cff 0%, #a277ff 50%, #42b883 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.5));
+}
+
+.VPHero .tagline {
+  font-weight: 600;
+  font-size: 20px;
+  color: #a277ff;
+  letter-spacing: 1px;
+}
+
+.VPHero .text {
+  font-size: 28px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.VPHome {
+  position: relative;
+  background: transparent !important;
+}
+
+.VPHome::before {
+  content: "";
+  position: fixed; 
+  inset: 0;
+  background-image: url('/bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -2;
+}
+
+.VPHome::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.VPLayout,
+.VPContent,
+.VPHero,
+.VPFeatures,
+.VPFooter {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.VPFeature {
+  background-color: transparent !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.VPFeature .box {
+  background-color: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  height: 100%;
+  transition: all 0.3s ease;
+  --vp-feature-bg: transparent !important;
+}
+
+.VPFeature .box:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-5px);
+}
