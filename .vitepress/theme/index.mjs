@@ -5,4 +5,3 @@ export default {
   extends: DefaultTheme,
   enhanceApp({ app, router, siteData }) {
   }
-}

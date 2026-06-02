@@ -1,3 +1,4 @@
+
 ---
 title: csnotes
 outline: deep
@@ -37,3 +38,4 @@ outline: deep
 ::: tip Userscripts
 [ Icourse helper ](https://github.com/LuanJiangXing/my-userscripts/blob/main/icourse%E8%A7%86%E9%A2%91%E5%8A%A9%E6%89%8B-1.2.user.js)
 :::
+
