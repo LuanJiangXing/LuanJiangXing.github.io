@@ -1,7 +1,5 @@
 
 ---
-title: GeoGuessr
----
 
 # GeoGuessr
 ::: info Introduction

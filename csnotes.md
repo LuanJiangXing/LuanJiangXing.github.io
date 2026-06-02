@@ -1,8 +1,5 @@
 
 ---
-title: csnotes
-outline: deep
----
 
 # cs study
 ::: info Introduction
