@@ -26,7 +26,8 @@ export default defineConfig({
                 items: [
                   { text: '0413 Lab Report', link: '/lab-notes/0413lab' },
                   { text: '0420 Lab Report', link: '/lab-notes/0420lab' },
-                  { text: '0525 Lab Report', link: '/lab-notes/0525lab' }
+                  { text: '0525 Lab Report', link: '/lab-notes/0525lab' },
+                  { text: '0601 Lab Report', link: '/lab-notes/0601lab' }
                 ]
               },
               {

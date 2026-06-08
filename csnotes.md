@@ -14,6 +14,8 @@
 ::: tip Lab Notes
 👉[0413 实验报告](./lab-notes/0413lab.md)
 👉[0420 实验报告](./lab-notes/0420lab.md)
+👉[0525 实验报告](./lab-notes/0525lab.md)
+👉[0601 实验报告](./lab-notes/0601lab.md)
 :::
 
 ### Linux
