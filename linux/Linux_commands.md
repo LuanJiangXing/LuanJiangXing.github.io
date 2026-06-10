@@ -10,7 +10,10 @@ cd ~
 
 ls 
 查看当前目录下有什么东西
-ll
+
+ls -a 显示全部包括隐藏，如.git
+
+ll(ls -l)
 具体查看
 
 tree
@@ -39,14 +42,23 @@ cp 复制
 man 手册
 
 Vim 文件名
+
 使用vim文本编辑器打开文件
+
 i（insert）出现insert可开始编辑
 
 输入/搜索 得到第一个答案后先点enter
+
 再点n看下一个 N看上一个
 
+gg去top GG去bottom
+
+/特定词 查找 回车后按n/N
+
 ESC退回到只读页面
+
 :wq 保存并推出
+
 :q! 不保存退出
 
 # 通用快捷键
