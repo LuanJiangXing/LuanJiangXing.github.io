@@ -43,6 +43,7 @@ while (1) {
 ```
 
 这一段是shell执行逻辑，本质是一个死循环不断等用户输入，执行用户输入
+
 eval(cmdline)即执行用户输入的根本逻辑，是第一个要实现的函数
 
 ```
@@ -71,7 +72,16 @@ int parseline(const char *cmdline, char **argv)
     }
 ```
 ```
-``
+```
+
+
+const char * cmdline 强调只读字符串 char ** argv强调对char* argv取值
+
+buf是一个游标指针 负责从左往右读输入的字符串
+
+先把最后的\n替换为空格，再把开头可能存在的空格都省掉
+
+ \'
 
 ## 写代码
 
