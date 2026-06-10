@@ -1,122 +1,215 @@
 # 通用命令
 
+cd 文件夹名
 
-cd 文件夹名 
 进入文件夹
+
 cd ..
+
 回到上一层，.. 即表示上一层目录/.表示当前目录，这可以在ll中看到
+
 cd ~
+
 回到home目录
 
-ls 
+ls
+
 查看当前目录下有什么东西
 
-ls -a 显示全部包括隐藏，如.git
+ls -a
+
+显示全部包括隐藏，如.git
 
 ll(ls -l)
+
 具体查看
 
 tree
+
 当前目录文件树状查看
 
 cat 文件夹名
+
 直接打印某文件内容
 
-file 文件夹名 
+file 文件夹名
+
 查看某文件性质
 
 mv 路径A下的文件名 路径B
-移动 
+
+移动
+
 一般需要提供很具体的路径 尤其是移动到与当前不相干的地方
+
 举例
+
 mv ~Downloads/bomb.tar ~/Desktop/mycode
 
 mv 文件名字 文件新名字
+
 改名
 
 一次移动多个文件到一个地方
+
 mv file1 file2 file3 ~/Desktop
 
-cp 复制
+cp
 
-man 手册
+复制
+
+man
+
+手册
+
+### Vim
 
 Vim 文件名
 
 使用vim文本编辑器打开文件
 
-i（insert）出现insert可开始编辑
+i（insert）
 
-输入/搜索 得到第一个答案后先点enter
+出现insert可开始编辑
+
+输入/搜索
+
+得到第一个答案后先点enter
 
 再点n看下一个 N看上一个
 
 gg去top GG去bottom
 
-/特定词 查找 回车后按n/N
+ctrl D down 向下滚动半屏 ctrl U up 向上滚动半屏
 
-ESC退回到只读页面
+ctrl F forward 向下滚动整屏 ctrl B backward 向上滚动整屏
 
-:wq 保存并推出
+ESC
 
-:q! 不保存退出
+退回到只读页面
+
+:wq
+
+保存并推出
+
+:q!
+
+不保存退出
 
 # 通用快捷键
 
-tab一键补全
-上下箭头选择之前输入过的命令
+tab
 
-Ctrl alt T 出terminal
+一键补全
 
-Ctrl shift + 放大界面
+上下箭头
 
-ctrl shift c/v 复制粘贴
-ctrl c 在命令行内为强制终止当前操作
+选择之前输入过的命令
 
-ctrl l 刷新界面
+Ctrl alt T
 
-Firefox about:config 放大
+出terminal
+
+Ctrl shift +
+
+放大界面
+
+ctrl shift c/v
+
+复制粘贴
+
+ctrl c
+
+在命令行内为强制终止当前操作
+
+ctrl l
+
+刷新界面
+
+Firefox about:config
+
+放大
 
 在一些不兼容上下箭头移动的窗口内，可能可以使用：
+
 ctrl B 【 来用上下键移动
 
 # 其他常用命令
 
-安装外部文件
+### 安装外部文件
+
 通常可以使用
+
 sudo apt install 文件名
+
 sudo本身是以管理员身份运行
+
 apt 下载器 依赖管理器 一键下载所有依赖库
+
 install 安装
 
-git
-适用于gitee github gitlab
-git clone xxx.git
-git remote add upstream xxx.git 添加某仓库为上游
-git pull upstream master 获取新作业
-git add . 将当前目录（.）下的所有发生变化的文件放进暂存区
-git commit -m "xxx" 提交到本地仓库，-m是留言
-这两步做完后依然在本地
-git push origin master 推送到远程仓库
-git status 看哪些文件add哪些没有
-git log 看commit记录
+### Git
 
-curl
+适用于gitee github gitlab
+
+git clone xxx.git
+
+git remote add upstream xxx.git
+
+添加某仓库为上游
+
+git pull upstream master
+
+获取新作业
+
+git add .
+
+将当前目录（.）下的所有发生变化的文件放进暂存区
+
+git commit -m "xxx"
+
+提交到本地仓库，-m是留言
+
+这两步做完后依然在本地
+
+git push origin master
+
+推送到远程仓库
+
+git status
+
+看哪些文件add哪些没有
+
+git log
+
+看commit记录
+
+### Curl
+
 下载
+
 1、如何下载
-curl -L 允许重定向的下载 常用于github等下载
+
+curl -L
+
+允许重定向的下载 常用于github等下载
 
 2、下载后
--o output 自己命名
--O 用原来的名字
 
-解压缩
+-o output
+
+自己命名
+
+-O
+
+用原来的名字
+
+### 解压缩
+
 tar -xvf bomb.tar
+
 tar -zxvf bomb.tar.gz
 
-压缩
-tar -zcvf 
+### 压缩
 
-
-
-
+tar -zcvf
