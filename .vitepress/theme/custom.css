@@ -28,11 +28,51 @@
   content: "";
   position: fixed; 
   inset: 0;
-  background-image: url('/bg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   z-index: -2;
+}
+
+.bg-slide {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bg-slide.active {
+  opacity: 1;
+}
+
+.bg-caption {
+  position: absolute;
+  top: 72px;
+  right: 32px;
+  z-index: 10;
+  padding: 6px 16px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  pointer-events: auto;
+}
+
+.bg-caption a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.bg-caption a:hover {
+  color: #a277ff;
+  text-decoration: underline;
 }
 
 .VPHome::after {
