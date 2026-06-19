@@ -81,18 +81,42 @@ function initBgSlideshow() {
   })
 }
 
+function cleanUpBg() {
+  // 清除背景图层和 caption
+  slideElements.forEach(el => el.remove())
+  slideElements = []
+  const caption = document.querySelector('.bg-caption')
+  if (caption) caption.remove()
+  if (slideshowInterval) {
+    clearInterval(slideshowInterval)
+    slideshowInterval = null
+  }
+  slideshowInitialized = false
+}
+
 export default {
   extends: DefaultTheme,
   enhanceApp({ app, router }) {
     if (typeof window !== 'undefined') {
       const tryInit = () => {
         if (document.querySelector('.VPHome')) {
+          cleanUpBg()
           initBgSlideshow()
         } else {
           setTimeout(tryInit, 300)
         }
       }
       tryInit()
+
+      // 路由切换时：离开首页清除背景，回到首页重建
+      router.onAfterRouteChange = () => {
+        if (document.querySelector('.VPHome')) {
+          cleanUpBg()
+          initBgSlideshow()
+        } else {
+          cleanUpBg()
+        }
+      }
     }
   }
 }
