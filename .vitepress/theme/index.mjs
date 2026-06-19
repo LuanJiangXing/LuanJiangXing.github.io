@@ -33,33 +33,28 @@ function initBgSlideshow() {
   const home = document.querySelector('.VPHome')
   if (!home) return
 
-  // 先显示第一张图（立即展示，不用等预加载）
-  const firstDiv = document.createElement('div')
-  firstDiv.className = 'bg-slide active'
-  firstDiv.style.backgroundImage = `url(${BG_IMAGES[0]})`
-  firstDiv.style.transition = `opacity ${FADE_DURATION_MS}ms ease`
-  home.insertBefore(firstDiv, home.firstChild)
-  slideElements = [firstDiv]  // slideElements[0] = 第一张图
-
-  // 预加载第 2、3 张图片（在后台下载），全部加载完后再创建剩余图层 + 启动定时器
-  const preloadPromises = BG_IMAGES.slice(1).map(src => {
+  // 统一预加载所有图片（包括第一张），全部加载完后再一起创建
+  const preloadPromises = BG_IMAGES.map(src => {
     return new Promise(resolve => {
       const img = new Image()
-      img.onload = resolve
-      img.onerror = resolve
+      img.onload = () => resolve(true)
+      img.onerror = () => {
+        console.warn('Failed to load image:', src)
+        resolve(false)  // 加载失败也继续，不阻塞
+      }
       img.src = src
     })
   })
 
   Promise.all(preloadPromises).then(() => {
-    // 图片已下载到浏览器缓存，创建剩余背景层
-    BG_IMAGES.slice(1).forEach((img) => {
+    // 所有图片已缓存到浏览器，一起创建背景图层
+    BG_IMAGES.forEach((img, i) => {
       const div = document.createElement('div')
-      div.className = 'bg-slide'
+      div.className = 'bg-slide' + (i === 0 ? ' active' : '')
       div.style.backgroundImage = `url(${img})`
       div.style.transition = `opacity ${FADE_DURATION_MS}ms ease`
       home.insertBefore(div, home.firstChild)
-      slideElements.push(div)  // 按索引顺序保存引用
+      slideElements.push(div)
     })
 
     // 创建图注元素
@@ -72,7 +67,7 @@ function initBgSlideshow() {
 
     currentIndex = 0
 
-    // 启动定时器，此时所有图片已在缓存中，第一次切换立刻生效
+    // 启动定时器
     slideshowInterval = setInterval(() => {
       if (slideElements.length === 0) return
 
