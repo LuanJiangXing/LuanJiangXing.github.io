@@ -26,44 +26,41 @@ let slideshowInitialized = false
 let slideElements = []  // 用数组维护 slide 顺序，不受 DOM 插入顺序影响
 
 function initBgSlideshow() {
-  // 防止重复初始化（图片+caption+定时器只创建一次）
+  // 防止重复初始化
   if (slideshowInitialized) return
   slideshowInitialized = true
 
-  const home = document.querySelector('.VPHome')
-  if (!home) return
-
-  // 统一预加载所有图片（包括第一张），全部加载完后再一起创建
+  // 统一预加载所有图片，全部加载完后再一起创建
   const preloadPromises = BG_IMAGES.map(src => {
     return new Promise(resolve => {
       const img = new Image()
       img.onload = () => resolve(true)
       img.onerror = () => {
         console.warn('Failed to load image:', src)
-        resolve(false)  // 加载失败也继续，不阻塞
+        resolve(false)
       }
       img.src = src
     })
   })
 
   Promise.all(preloadPromises).then(() => {
-    // 所有图片已缓存到浏览器，一起创建背景图层
+    // 所有背景图层插入到 body，不干扰 VitePress 组件结构
     BG_IMAGES.forEach((img, i) => {
       const div = document.createElement('div')
       div.className = 'bg-slide' + (i === 0 ? ' active' : '')
       div.style.backgroundImage = `url(${img})`
       div.style.transition = `opacity ${FADE_DURATION_MS}ms ease`
-      home.insertBefore(div, home.firstChild)
+      document.body.appendChild(div)
       slideElements.push(div)
     })
 
-    // 创建图注元素
+    // 图注也插入到 body
     const caption = document.createElement('div')
     caption.className = 'bg-caption'
     caption.style.transition = `opacity ${FADE_DURATION_MS}ms ease`
     caption.style.opacity = '1'
     caption.innerHTML = `<a href="${BG_CAPTIONS[0].link}" target="_blank" rel="noopener">${BG_CAPTIONS[0].text}</a>`
-    home.appendChild(caption)
+    document.body.appendChild(caption)
 
     currentIndex = 0
 
