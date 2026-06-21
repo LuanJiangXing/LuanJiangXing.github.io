@@ -212,10 +212,11 @@ async function initBgSlideshow() {
   // 后台异步加载剩余图片（按从起始点开始的顺序）
   const remainingSlides = orderedSlides.slice(1)
   for (const slide of remainingSlides) {
-    // 加载图片
+    // 加载图片（失败不影响创建元素）
     await preloadImage(slide.image)
     
-    // 创建图层（非激活状态，使用原始索引）
+    // 无论加载成功与否，都必须创建图层，确保轮播完整性
+    // 使用原始索引，使 slideElements 数组完整
     createSlideElement(slide.originalIndex, false)
   }
 
