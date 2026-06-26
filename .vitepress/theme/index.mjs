@@ -96,12 +96,17 @@ function createSlideElement(index, isActive) {
  * 创建图注元素
  */
 function createCaptionElement() {
+  // 如果已经存在 caption，直接复用
+  if (captionElement) {
+    return captionElement
+  }
   const caption = document.createElement('div')
   caption.className = 'bg-caption'
   caption.style.transition = `opacity ${FADE_DURATION_MS}ms ease`
   caption.style.opacity = '0'
   document.body.appendChild(caption)
-  return caption
+  captionElement = caption
+  return captionElement
 }
 
 /**
@@ -140,12 +145,6 @@ function switchToSlide(nextIndex) {
   
   // 更新图注
   updateCaption(currentIndex)
-  
-  // 预加载下下张图片（提前准备）
-  const preloadIndex = (currentIndex + 1) % BG_SLIDES.length
-  if (!loadedImages.has(BG_SLIDES[preloadIndex].image)) {
-    preloadImage(BG_SLIDES[preloadIndex].image)
-  }
 }
 
 /**
@@ -159,24 +158,7 @@ function startSlideshow() {
 }
 
 /**
- * 获取按随机起始点排序的幻灯片数组
- * @param {number} startIndex - 起始索引
- * @returns {Array} - 重新排序后的幻灯片数组，包含原始索引信息
- */
-function getSlidesFromStart(startIndex) {
-  const slides = []
-  for (let i = 0; i < BG_SLIDES.length; i++) {
-    const originalIndex = (startIndex + i) % BG_SLIDES.length
-    slides.push({
-      ...BG_SLIDES[originalIndex],
-      originalIndex
-    })
-  }
-  return slides
-}
-
-/**
- * 初始化背景幻灯片（渐进加载版本，支持随机起始）
+ * 初始化背景幻灯片
  */
 async function initBgSlideshow() {
   // 防止重复初始化
@@ -185,39 +167,25 @@ async function initBgSlideshow() {
 
   // 随机选择起始索引
   const startIndex = Math.floor(Math.random() * BG_SLIDES.length)
-  
-  // 获取按随机起始点排序的幻灯片数组
-  const orderedSlides = getSlidesFromStart(startIndex)
 
-  // 先加载第一张（随机选中的）图片
-  const firstSlide = orderedSlides[0]
-  const firstLoaded = await preloadImage(firstSlide.image)
-  
-  if (!firstLoaded) {
-    console.error('首图加载失败，幻灯片功能不可用')
-    slideshowInitialized = false
-    return
-  }
-
-  // 创建第一张幻灯片并立即显示（使用原始索引）
-  createSlideElement(firstSlide.originalIndex, true)
-  
-  // 创建图注并显示
-  captionElement = createCaptionElement()
-  captionElement.innerHTML = `<a href="${firstSlide.link}" target="_blank" rel="noopener">${firstSlide.caption}</a>`
-  captionElement.style.opacity = '1'
-
-  currentIndex = firstSlide.originalIndex
-
-  // 后台异步加载剩余图片（按从起始点开始的顺序）
-  const remainingSlides = orderedSlides.slice(1)
-  for (const slide of remainingSlides) {
-    // 加载图片（失败不影响创建元素）
+  // 依次加载所有图片（先加载起始图，再加载其余）
+  for (let i = 0; i < BG_SLIDES.length; i++) {
+    const idx = (startIndex + i) % BG_SLIDES.length
+    const slide = BG_SLIDES[idx]
+    
+    // 加载图片（不中断流程）
     await preloadImage(slide.image)
     
-    // 无论加载成功与否，都必须创建图层，确保轮播完整性
-    // 使用原始索引，使 slideElements 数组完整
-    createSlideElement(slide.originalIndex, false)
+    // 创建图层
+    createSlideElement(idx, i === 0)
+    
+    if (i === 0) {
+      // 第一张图：创建并显示图注
+      captionElement = createCaptionElement()
+      captionElement.innerHTML = `<a href="${slide.link}" target="_blank" rel="noopener">${slide.caption}</a>`
+      captionElement.style.opacity = '1'
+      currentIndex = idx
+    }
   }
 
   // 启动定时器
@@ -230,30 +198,34 @@ function cleanUpBg() {
     if (el) el.remove()
   })
   slideElements = []
-  const caption = document.querySelector('.bg-caption')
-  if (caption) caption.remove()
+  if (captionElement) {
+    captionElement.remove()
+    captionElement = null
+  }
   if (slideshowInterval) {
     clearInterval(slideshowInterval)
     slideshowInterval = null
   }
   slideshowInitialized = false
+  loadedImages = new Set()
 }
 
 export default {
   extends: DefaultTheme,
   enhanceApp({ app, router }) {
     if (typeof window !== 'undefined') {
-      const tryInit = () => {
+      // 初始化时检查首页
+      const checkAndInit = () => {
         if (document.querySelector('.VPHome')) {
           cleanUpBg()
           initBgSlideshow()
-        } else {
-          setTimeout(tryInit, 300)
         }
       }
-      tryInit()
 
-      // 路由切换时：离开首页清除背景，回到首页重建
+      // 首次加载延迟检查（等待 DOM 渲染）
+      setTimeout(checkAndInit, 300)
+
+      // 路由切换时统一处理
       router.onAfterRouteChange = () => {
         if (document.querySelector('.VPHome')) {
           cleanUpBg()
