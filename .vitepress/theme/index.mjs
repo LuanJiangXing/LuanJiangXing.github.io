@@ -52,6 +52,9 @@ let loadedImages = new Set() // 记录已加载的图片
 // 防止并行初始化的锁
 let initPromise = null
 
+// 当前轮播的洗牌顺序（保存 BG_SLIDES 索引，按播放顺序排列）
+let shuffleOrder = []
+
 /**
  * 预加载单张图片
  * @param {string} src - 图片路径
@@ -149,11 +152,28 @@ function switchToSlide(nextIndex) {
 }
 
 /**
+ * Fisher-Yates 洗牌算法
+ * @param {number} length - 数组长度
+ * @returns {number[]} - 包含 0 到 length-1 的随机排列
+ */
+function generateShuffleOrder(length) {
+  const arr = Array.from({ length }, (_, i) => i)
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[arr[i], arr[j]] = [arr[j], arr[i]]
+  }
+  return arr
+}
+
+/**
  * 启动幻灯片定时器
  */
 function startSlideshow() {
   slideshowInterval = setInterval(() => {
-    const nextIndex = (currentIndex + 1) % BG_SLIDES.length
+    // 在 shuffleOrder 中找到当前索引的位置，取下一个
+    const pos = shuffleOrder.indexOf(currentIndex)
+    const nextPos = (pos + 1) % shuffleOrder.length
+    const nextIndex = shuffleOrder[nextPos]
     switchToSlide(nextIndex)
   }, SWITCH_INTERVAL_MS)
 }
@@ -174,12 +194,12 @@ async function initBgSlideshow() {
   }
   
   initPromise = (async () => {
-    // 随机选择起始索引
-    const startIndex = Math.floor(Math.random() * BG_SLIDES.length)
+    // 生成随机洗牌顺序
+    shuffleOrder = generateShuffleOrder(BG_SLIDES.length)
 
-    // 依次加载所有图片
-    for (let i = 0; i < BG_SLIDES.length; i++) {
-      const idx = (startIndex + i) % BG_SLIDES.length
+    // 按洗牌顺序依次加载所有图片
+    for (let i = 0; i < shuffleOrder.length; i++) {
+      const idx = shuffleOrder[i]
       const slide = BG_SLIDES[idx]
       
       // 加载图片
