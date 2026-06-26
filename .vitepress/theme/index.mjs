@@ -44,11 +44,13 @@ const BG_SLIDES = [
 
 let slideshowInterval = null
 let currentIndex = 0
-let slideshowInitialized = false
 let captionElement = null
 
 let slideElements = []  // 用数组维护 slide 顺序，索引对应 BG_SLIDES 索引
 let loadedImages = new Set() // 记录已加载的图片
+
+// 防止并行初始化的锁
+let initPromise = null
 
 /**
  * 预加载单张图片
@@ -93,10 +95,9 @@ function createSlideElement(index, isActive) {
 }
 
 /**
- * 创建图注元素
+ * 创建或复用图注元素
  */
 function createCaptionElement() {
-  // 如果已经存在 caption，直接复用
   if (captionElement) {
     return captionElement
   }
@@ -159,54 +160,74 @@ function startSlideshow() {
 
 /**
  * 初始化背景幻灯片
+ * 通过 initPromise 锁防止并行调用，如果已有初始化在进行中则等待其完成
  */
 async function initBgSlideshow() {
-  // 防止重复初始化
-  if (slideshowInitialized) return
-  slideshowInitialized = true
-
-  // 随机选择起始索引
-  const startIndex = Math.floor(Math.random() * BG_SLIDES.length)
-
-  // 依次加载所有图片（先加载起始图，再加载其余）
-  for (let i = 0; i < BG_SLIDES.length; i++) {
-    const idx = (startIndex + i) % BG_SLIDES.length
-    const slide = BG_SLIDES[idx]
-    
-    // 加载图片（不中断流程）
-    await preloadImage(slide.image)
-    
-    // 创建图层
-    createSlideElement(idx, i === 0)
-    
-    if (i === 0) {
-      // 第一张图：创建并显示图注
-      captionElement = createCaptionElement()
-      captionElement.innerHTML = `<a href="${slide.link}" target="_blank" rel="noopener">${slide.caption}</a>`
-      captionElement.style.opacity = '1'
-      currentIndex = idx
+  // 如果已有初始化在进行中，等待它完成（此时可能已被清除，需要重新开始）
+  if (initPromise) {
+    await initPromise
+    // 等待完成后检查是否已被清除（例如路由又变了），若是则重新初始化
+    if (slideElements.length === 0) {
+      return initBgSlideshow()
     }
+    return
   }
+  
+  initPromise = (async () => {
+    // 随机选择起始索引
+    const startIndex = Math.floor(Math.random() * BG_SLIDES.length)
 
-  // 启动定时器
-  startSlideshow()
+    // 依次加载所有图片
+    for (let i = 0; i < BG_SLIDES.length; i++) {
+      const idx = (startIndex + i) % BG_SLIDES.length
+      const slide = BG_SLIDES[idx]
+      
+      // 加载图片
+      await preloadImage(slide.image)
+      
+      // 创建图层
+      createSlideElement(idx, i === 0)
+      
+      if (i === 0) {
+        // 第一张图：创建并显示图注
+        captionElement = createCaptionElement()
+        captionElement.innerHTML = `<a href="${slide.link}" target="_blank" rel="noopener">${slide.caption}</a>`
+        captionElement.style.opacity = '1'
+        currentIndex = idx
+      }
+    }
+
+    // 启动定时器
+    startSlideshow()
+  })()
+  
+  await initPromise
+  initPromise = null
 }
 
 function cleanUpBg() {
-  // 清除背景图层和 caption
-  slideElements.forEach(el => {
-    if (el) el.remove()
-  })
-  slideElements = []
-  if (captionElement) {
-    captionElement.remove()
-    captionElement = null
-  }
+  // 标记初始化已过时（如果有正在进行的初始化，其创建的元素后续会被清除）
+  initPromise = null
+  
+  // 清除定时器
   if (slideshowInterval) {
     clearInterval(slideshowInterval)
     slideshowInterval = null
   }
-  slideshowInitialized = false
+  
+  // 清除背景图层
+  slideElements.forEach(el => {
+    if (el) el.remove()
+  })
+  slideElements = []
+  
+  // 清除图注
+  if (captionElement) {
+    captionElement.remove()
+    captionElement = null
+  }
+  
+  // 重置状态
   loadedImages = new Set()
 }
 
@@ -214,18 +235,8 @@ export default {
   extends: DefaultTheme,
   enhanceApp({ app, router }) {
     if (typeof window !== 'undefined') {
-      // 初始化时检查首页
-      const checkAndInit = () => {
-        if (document.querySelector('.VPHome')) {
-          cleanUpBg()
-          initBgSlideshow()
-        }
-      }
-
-      // 首次加载延迟检查（等待 DOM 渲染）
-      setTimeout(checkAndInit, 300)
-
-      // 路由切换时统一处理
+      // 只使用 onAfterRouteChange，SSR 水合后一定会触发一次
+      // 不再使用 setTimeout/轮询，彻底消除竞态条件
       router.onAfterRouteChange = () => {
         if (document.querySelector('.VPHome')) {
           cleanUpBg()
