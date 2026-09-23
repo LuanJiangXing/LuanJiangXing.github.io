@@ -210,6 +210,10 @@ tar -xvf bomb.tar
 
 tar -zxvf bomb.tar.gz
 
+unzip xxx.zip
+
 ### 压缩
 
 tar -zcvf
+
+zip xxx.zip
