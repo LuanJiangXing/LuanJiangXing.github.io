@@ -150,7 +150,15 @@ install 安装
 
 ### Git
 
-适用于gitee github gitlab
+git init -b main
+
+-b的意思是--initial-branch，由于git默认初始分支是master，需要改为main，实际上git branch -m main也可以但这样就在初始化的时候一次性搞定了
+
+git config user.name
+
+git config user.email 这里一般不会使用真实email提交 可以使用github提供的映射email
+
+形如 xxxxxxxxx+username@users.noreply.github.com
 
 git clone xxx.git
 
@@ -158,13 +166,13 @@ git remote add upstream xxx.git
 
 添加某仓库为上游
 
-git pull upstream master
+git pull upstream master 获取新作业
 
-获取新作业
+git add . 将当前目录（.）下的所有发生变化的文件放进暂存区
 
-git add .
+git add -A 将仓库所有改动都放进暂存区，-A意为all，如果这个命令是在根目录敲，那和git add . 效果应当是一致的
 
-将当前目录（.）下的所有发生变化的文件放进暂存区
+git status 查看提交状态
 
 git commit -m "xxx"
 
@@ -172,17 +180,17 @@ git commit -m "xxx"
 
 这两步做完后依然在本地
 
-git push origin master
+git push -u origin main 第一次-u，意为--set-upstream，相当于记住，后面直接git push即可
 
 推送到远程仓库
 
-git status
+git log --oneline -x
 
-看哪些文件add哪些没有
+看commit记录，最近几条
 
-git log
+git ls-files
 
-看commit记录
+输出已被git跟踪的文件路径
 
 ### Curl
 
