@@ -4,8 +4,20 @@ export default defineConfig({
   title: 'Mountains and Rivers',
   description: "CS Noob's personal site",
 
+  // 本地存在但不属于站点的文件（Obsidian Copilot、旧笔记等），
+  // 不排除会让 docs:dev / docs:build 直接报错
+  srcExclude: [
+    'copilot/**',
+    '0621bgpic.md',
+    'lab-notes/docx-md&pic&sidebar.md'
+  ],
+
   themeConfig: {
     siteTitle: 'Mountains and Rivers',
+
+    search: {
+      provider: 'local'
+    },
 
     nav: [
       { text: 'Home', link: '/' },

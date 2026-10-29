@@ -1,0 +1,1 @@
+import{_ as t,o as e,c as s,a2 as l}from"./chunks/framework.Di-jvWLj.js";const m=JSON.parse('{"title":"cs study","description":"","frontmatter":{},"headers":[],"relativePath":"csnotes.md","filePath":"csnotes.md"}'),o={name:"csnotes.md"};function c(i,a,r,n,u,d){return e(),s("div",null,[...a[0]||(a[0]=[l("",13)])])}const b=t(o,[["render",c]]);export{m as __pageData,b as default};

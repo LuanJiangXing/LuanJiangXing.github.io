@@ -1,5 +1,6 @@
 import DefaultTheme from 'vitepress/theme'
 import './custom.css'
+import { setupImageZoom, closeImageZoom } from './image-zoom.mjs'
 
 // ==================== 配置区 ====================
 // 修改以下参数即可调整封面背景图切换效果
@@ -255,9 +256,13 @@ export default {
   extends: DefaultTheme,
   enhanceApp({ app, router }) {
     if (typeof window !== 'undefined') {
+      setupImageZoom()
+
       // 只使用 onAfterRouteChange，SSR 水合后一定会触发一次
       // 不再使用 setTimeout/轮询，彻底消除竞态条件
       router.onAfterRouteChange = () => {
+        closeImageZoom()
+
         if (document.querySelector('.VPHome')) {
           cleanUpBg()
           initBgSlideshow()

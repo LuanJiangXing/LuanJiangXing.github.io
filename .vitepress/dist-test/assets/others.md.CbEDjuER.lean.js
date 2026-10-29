@@ -1,0 +1,1 @@
+import{_ as t,o as a,c as i,a2 as r}from"./chunks/framework.Di-jvWLj.js";const p=JSON.parse('{"title":"其他杂项","description":"","frontmatter":{},"headers":[],"relativePath":"others.md","filePath":"others.md"}'),l={name:"others.md"};function s(o,e,c,n,h,u){return a(),i("div",null,[...e[0]||(e[0]=[r("",9)])])}const b=t(l,[["render",s]]);export{p as __pageData,b as default};
