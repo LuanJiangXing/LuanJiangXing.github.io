@@ -50,7 +50,8 @@ export default defineConfig({
                     { text: 'gdb x command', link: '/linux/gdb_x_command' },
                     { text: 'Bomb Lab Related', link: '/linux/Bomb_Lab_Related' },
                     { text: 'Bomb Lab', link: '/linux/Bomb_Lab' },
-                    { text: 'Attack Lab', link: '/linux/Attack_Lab' }
+                    { text: 'Attack Lab', link: '/linux/Attack_Lab' },
+                    { text: 'Shell Lab', link: '/linux/shlab' }
                   ]
               }
             ]
@@ -60,7 +61,8 @@ export default defineConfig({
       {
         text: 'Interests',
         items: [
-          { text: 'GeoGuessr', link: '/interests/geoguessr' }
+          { text: 'GeoGuessr', link: '/interests/geoguessr' },
+          { text: 'Three Years', link: '/interests/three_years' }
         ]
       },
       {
