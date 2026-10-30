@@ -1,4 +1,5 @@
 import DefaultTheme from 'vitepress/theme'
+import { nextTick, onMounted } from 'vue'
 import './custom.css'
 import { setupImageZoom, closeImageZoom } from './image-zoom.mjs'
 
@@ -252,23 +253,50 @@ function cleanUpBg() {
   loadedImages = new Set()
 }
 
+// 首页是否已经启动轮播；用来避免重复初始化
+let bgActive = false
+
+/**
+ * 根据当前 DOM 同步背景轮播
+ * 不能只靠路由钩子：VitePress 在 app.mount() 之前就触发了首次
+ * onAfterRouteChange，dev 下 #app 还是空的，查不到 .VPHome；
+ * 生产环境因为 HTML 是预渲染的才碰巧能工作。
+ */
+function syncBackground() {
+  if (typeof document === 'undefined') return
+
+  const isHome = !!document.querySelector('.VPHome')
+
+  if (isHome && !bgActive) {
+    bgActive = true
+    initBgSlideshow()
+  } else if (!isHome && bgActive) {
+    bgActive = false
+    cleanUpBg()
+  }
+}
+
 export default {
   extends: DefaultTheme,
+
+  // VitePressApp 的 setup 里会调用它；此时注册的 onMounted
+  // 会在整棵页面挂载完成后触发，dev/prod 都能拿到真实的 DOM
+  setup() {
+    if (typeof window !== 'undefined') {
+      onMounted(syncBackground)
+    }
+  },
+
   enhanceApp({ app, router }) {
     if (typeof window !== 'undefined') {
       setupImageZoom()
 
-      // 只使用 onAfterRouteChange，SSR 水合后一定会触发一次
-      // 不再使用 setTimeout/轮询，彻底消除竞态条件
-      router.onAfterRouteChange = () => {
+      router.onAfterRouteChange = async () => {
         closeImageZoom()
 
-        if (document.querySelector('.VPHome')) {
-          cleanUpBg()
-          initBgSlideshow()
-        } else {
-          cleanUpBg()
-        }
+        // 等新路由的组件真正渲染到 DOM，再判断是不是首页
+        await nextTick()
+        syncBackground()
       }
     }
   }

@@ -27,11 +27,21 @@
   --vp-c-gutter: #e2e4dd;
   --vp-c-border: #c8ccc4;
 
-  /* 字体：拉丁用 Inter，中文优先系统黑体，避免落到宋体 */
-  --vp-font-family-base: 'Inter', 'PingFang SC', 'Hiragino Sans GB',
-    'Microsoft YaHei', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
-  --vp-font-family-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas,
-    'Liberation Mono', Menlo, monospace;
+  /* 字体：优先各平台原生 UI 字体，中文走苹方 / 微软雅黑 UI，
+     拉丁回落到仓库里自带的 Inter；避免中文落到宋体 */
+  --vp-font-family-base: -apple-system, BlinkMacSystemFont,
+    'Segoe UI Variable Text', 'Segoe UI Variable', 'Segoe UI', Inter,
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI',
+    'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
+  --vp-font-family-mono: 'Cascadia Code', 'Cascadia Mono', ui-monospace,
+    'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo,
+    monospace;
+
+  /* 大标题单独走 Display 字面，字重和字距更稳 */
+  --mvr-font-display: 'Segoe UI Variable Display', 'Segoe UI Variable',
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei',
+    'Noto Sans SC', system-ui, sans-serif;
 
   --vp-nav-bg-color: rgba(251, 251, 248, 0.82);
   --vp-sidebar-bg-color: var(--vp-c-bg-alt);
@@ -77,6 +87,7 @@ html {
 
 body {
   font-synthesis: none;
+  font-optical-sizing: auto;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -151,8 +162,8 @@ body {
   opacity: 1;
 }
 
-/* 统一的压暗层：顶部压暗保证导航可读，左侧压暗保证标题可读，
-   底部轻微收边；比原来 10% 纯黑更可靠，也不会把照片糊掉 */
+/* 压暗层：只保留很轻的顶部/底部收边，左侧用一块以文字为中心的椭圆阴影，
+   照片的大部分保持通透；文字靠 text-shadow 兜底 */
 .VPHome::after {
   content: "";
   position: fixed;
@@ -162,22 +173,51 @@ body {
   background:
     linear-gradient(
       180deg,
-      rgba(8, 11, 10, 0.38) 0%,
-      rgba(8, 11, 10, 0.08) 16%,
-      rgba(8, 11, 10, 0) 32%
+      rgba(8, 11, 10, 0.24) 0%,
+      rgba(8, 11, 10, 0.05) 14%,
+      rgba(8, 11, 10, 0) 30%
     ),
     linear-gradient(
       100deg,
-      rgba(8, 11, 10, 0.82) 0%,
-      rgba(8, 11, 10, 0.66) 48%,
-      rgba(8, 11, 10, 0.22) 76%,
+      rgba(8, 11, 10, 0.34) 0%,
+      rgba(8, 11, 10, 0.2) 38%,
+      rgba(8, 11, 10, 0.02) 68%,
       rgba(8, 11, 10, 0) 100%
+    ),
+    radial-gradient(
+      55% 62% at 30% 44%,
+      rgba(8, 11, 10, 0.38) 0%,
+      rgba(8, 11, 10, 0.18) 45%,
+      rgba(8, 11, 10, 0) 78%
     ),
     linear-gradient(
       0deg,
-      rgba(8, 11, 10, 0.34) 0%,
-      rgba(8, 11, 10, 0) 28%
+      rgba(8, 11, 10, 0.18) 0%,
+      rgba(8, 11, 10, 0) 26%
     );
+}
+
+@media (max-width: 959px) {
+  .VPHome::after {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(8, 11, 10, 0.28) 0%,
+        rgba(8, 11, 10, 0.06) 14%,
+        rgba(8, 11, 10, 0) 32%
+      ),
+      radial-gradient(
+        120% 80% at 35% 44%,
+        rgba(8, 11, 10, 0.5) 0%,
+        rgba(8, 11, 10, 0.28) 50%,
+        rgba(8, 11, 10, 0) 82%
+      ),
+      linear-gradient(
+        0deg,
+        rgba(8, 11, 10, 0.2) 0%,
+        rgba(8, 11, 10, 0) 26%
+      );
+  }
 }
 
 .VPLayout,
@@ -191,13 +231,16 @@ body {
 
 /* 首屏标题：去掉默认三段渐变，改成一整块暖白 */
 .VPHome .VPHero .name {
-  font-weight: 750;
-  letter-spacing: -0.02em;
+  font-family: var(--mvr-font-display);
+  font-weight: 700;
+  letter-spacing: 0;
   color: #f7f6f0;
   background: none;
   -webkit-text-fill-color: currentColor;
   filter: none;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+  text-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.35),
+    0 10px 40px rgba(0, 0, 0, 0.45);
 }
 
 .VPHome .VPHero .text {
@@ -206,8 +249,11 @@ body {
   font-size: clamp(22px, 2.6vw, 30px);
   font-weight: 400;
   line-height: 1.45;
-  color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 8px 28px rgba(0, 0, 0, 0.4);
 }
 
 .VPHome .VPHero .tagline {
@@ -261,7 +307,7 @@ body {
 }
 
 .VPFeature .box {
-  background-color: rgba(12, 17, 15, 0.6);
+  background-color: rgba(12, 17, 15, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 14px;
   backdrop-filter: blur(14px) saturate(130%);
@@ -275,7 +321,7 @@ body {
 }
 
 .VPFeature .box:hover {
-  background-color: rgba(12, 17, 15, 0.72);
+  background-color: rgba(12, 17, 15, 0.62);
   border-color: rgba(255, 255, 255, 0.32);
   transform: translateY(-4px);
 }
@@ -344,28 +390,33 @@ body {
 
 .vp-doc {
   font-size: 16px;
+  letter-spacing: 0.01em;
+  font-optical-sizing: auto;
 }
 
 .vp-doc p,
 .vp-doc li,
 .vp-doc td {
-  line-height: 1.78;
+  line-height: 1.8;
 }
 
 .vp-doc h1 {
+  font-family: var(--mvr-font-display);
   font-size: 30px;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 .vp-doc h2 {
   margin-top: 44px;
+  font-family: var(--mvr-font-display);
   font-size: 22px;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 .vp-doc h3 {
   margin-top: 30px;
   font-size: 18px;
+  letter-spacing: 0;
 }
 
 .vp-doc h4 {
