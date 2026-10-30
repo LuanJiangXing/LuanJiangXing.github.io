@@ -162,62 +162,15 @@ body {
   opacity: 1;
 }
 
-/* 压暗层：只保留很轻的顶部/底部收边，左侧用一块以文字为中心的椭圆阴影，
-   照片的大部分保持通透；文字靠 text-shadow 兜底 */
+/* 压暗层：整屏均匀一层很淡的黑，不再做左右渐变；
+   白字的可读性交给文字自身的柔和投影 */
 .VPHome::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(8, 11, 10, 0.24) 0%,
-      rgba(8, 11, 10, 0.05) 14%,
-      rgba(8, 11, 10, 0) 30%
-    ),
-    linear-gradient(
-      100deg,
-      rgba(8, 11, 10, 0.34) 0%,
-      rgba(8, 11, 10, 0.2) 38%,
-      rgba(8, 11, 10, 0.02) 68%,
-      rgba(8, 11, 10, 0) 100%
-    ),
-    radial-gradient(
-      55% 62% at 30% 44%,
-      rgba(8, 11, 10, 0.38) 0%,
-      rgba(8, 11, 10, 0.18) 45%,
-      rgba(8, 11, 10, 0) 78%
-    ),
-    linear-gradient(
-      0deg,
-      rgba(8, 11, 10, 0.18) 0%,
-      rgba(8, 11, 10, 0) 26%
-    );
-}
-
-@media (max-width: 959px) {
-  .VPHome::after {
-    background:
-      linear-gradient(
-        180deg,
-        rgba(8, 11, 10, 0.28) 0%,
-        rgba(8, 11, 10, 0.06) 14%,
-        rgba(8, 11, 10, 0) 32%
-      ),
-      radial-gradient(
-        120% 80% at 35% 44%,
-        rgba(8, 11, 10, 0.5) 0%,
-        rgba(8, 11, 10, 0.28) 50%,
-        rgba(8, 11, 10, 0) 82%
-      ),
-      linear-gradient(
-        0deg,
-        rgba(8, 11, 10, 0.2) 0%,
-        rgba(8, 11, 10, 0) 26%
-      );
-  }
+  background: rgba(8, 11, 10, 0.16);
 }
 
 .VPLayout,
@@ -239,8 +192,9 @@ body {
   -webkit-text-fill-color: currentColor;
   filter: none;
   text-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.35),
-    0 10px 40px rgba(0, 0, 0, 0.45);
+    0 0 2px rgba(0, 0, 0, 0.5),
+    0 0 22px rgba(0, 0, 0, 0.55),
+    0 2px 40px rgba(0, 0, 0, 0.45);
 }
 
 .VPHome .VPHero .text {
@@ -252,8 +206,8 @@ body {
   letter-spacing: 0.01em;
   color: rgba(255, 255, 255, 0.92);
   text-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.4),
-    0 8px 28px rgba(0, 0, 0, 0.4);
+    0 0 2px rgba(0, 0, 0, 0.5),
+    0 0 16px rgba(0, 0, 0, 0.5);
 }
 
 .VPHome .VPHero .tagline {
@@ -263,6 +217,9 @@ body {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.68);
+  text-shadow:
+    0 0 2px rgba(0, 0, 0, 0.45),
+    0 0 12px rgba(0, 0, 0, 0.45);
 }
 
 .VPHome .VPHero .actions {
