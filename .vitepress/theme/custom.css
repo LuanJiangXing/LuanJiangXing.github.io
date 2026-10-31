@@ -575,9 +575,11 @@ html.ui-hidden .VPHome .VPFeatures {
   pointer-events: none;
 }
 
+/* 图注在沉浸模式下保留，并且仍然可点；只把顶部导航压掉 */
 html.ui-hidden .bg-caption {
-  opacity: 0 !important;
-  pointer-events: none;
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(10, 14, 13, 0.52);
+  z-index: 20;
 }
 
 /* 沉浸时按钮退到很低的存在感，鼠标移上去再亮起来 */

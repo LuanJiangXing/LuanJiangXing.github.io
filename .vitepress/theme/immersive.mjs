@@ -79,10 +79,16 @@ export function setupImmersive() {
     if (event.key === 'Escape' && active) setImmersive(false)
   })
 
-  // 沉浸模式下点页面任意位置都退出，按钮本身除外
+  // 沉浸模式下点页面任意位置都退出；按钮和地点图注除外，
+  // 图注是链接，点它应该去地图而不是退出
   document.addEventListener('click', (event) => {
     if (!active) return
-    if (event.target.closest && event.target.closest('.ui-toggle')) return
+    const target = event.target
+    if (!target.closest) {
+      setImmersive(false)
+      return
+    }
+    if (target.closest('.ui-toggle') || target.closest('.bg-caption')) return
     setImmersive(false)
   })
 
