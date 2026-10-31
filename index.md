@@ -5,14 +5,6 @@ layout: home
 hero:
   name: "Mountains and Rivers"
   text: "Just take what you need and be on your way"
-  actions:
-    - theme: brand
-      text: markdown-examples
-      link: /markdown-examples
-    - theme: alt
-      text: api-examples
-      link: /api-examples
-
 
 features:
   - title: study

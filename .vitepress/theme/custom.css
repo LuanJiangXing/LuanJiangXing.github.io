@@ -503,3 +503,103 @@ html.image-zoom-open,
 html.image-zoom-open body {
   overflow: hidden;
 }
+
+/* --------------------------- 首页「只看街景」 --------------------------- */
+
+.ui-toggle {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 30;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(10, 14, 13, 0.42);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  opacity: 0.55;
+  transition:
+    opacity 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+html.show-ui-toggle .ui-toggle {
+  display: flex;
+}
+
+.ui-toggle:hover {
+  opacity: 1;
+  background: rgba(10, 14, 13, 0.62);
+  border-color: rgba(255, 255, 255, 0.42);
+}
+
+.ui-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.ui-toggle .icon-off {
+  display: none;
+}
+
+.ui-toggle.is-active .icon-on {
+  display: none;
+}
+
+.ui-toggle.is-active .icon-off {
+  display: block;
+}
+
+.VPNav,
+.VPNavScreen,
+.VPHome .VPHero,
+.VPHome .VPFeatures,
+.bg-caption {
+  transition: opacity 0.35s ease;
+}
+
+html.ui-hidden .VPNav,
+html.ui-hidden .VPNavScreen,
+html.ui-hidden .VPHome .VPHero,
+html.ui-hidden .VPHome .VPFeatures {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+html.ui-hidden .bg-caption {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* 沉浸时按钮退到很低的存在感，鼠标移上去再亮起来 */
+html.ui-hidden .ui-toggle {
+  opacity: 0.22;
+}
+
+html.ui-hidden .ui-toggle:hover {
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .ui-toggle {
+    right: 16px;
+    bottom: 16px;
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media print {
+  .ui-toggle {
+    display: none !important;
+  }
+}

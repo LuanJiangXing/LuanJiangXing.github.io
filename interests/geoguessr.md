@@ -24,6 +24,7 @@ This part concludes how a GeoGuessr NOOB grows.<br>
 - Introducing recent important and interesting geoguessr-related news <br>
 [GeoNews](https://space.bilibili.com/1641506378/lists/9207811) &nbsp;&nbsp;
 [Github REPO](https://github.com/LuanJiangXing/geonews) &nbsp;&nbsp;
+:::
 
 ## Website
 ::: info Community-driven Interactive Geographic Atlas
@@ -34,7 +35,9 @@ This part concludes how a GeoGuessr NOOB grows.<br>
 
 ## Docs
 ::: tip Released Doc
-[ New Zealand Doc ](https://docs.google.com/document/d/1oFOUczWrKdU6wq-OB1CUwyfpKTYxNuCfP_r59WI4DFU) &nbsp;&nbsp;
+- A Comprehensive Guide on New Zealand, the splendid country
+[ New Zealand Doc ](https://docs.google.com/document/d/1oFOUczWrKdU6wq-OB1CUwyfpKTYxNuCfP_r59WI4DFU) <br>
+- Teach you how to recite similar roads in Russia Fareast with white A-type antenna
 [ Fareast RU white A car Doc ](https://www.yuque.com/chaofun/tuxun/ru_fareast)<br>
 [ Translation of Brainy's New Zealand Doc](https://www.yuque.com/chaofun/tuxun/the_ultimate_guide_to_new_zealand) &nbsp;&nbsp;
 [ Translation of ALR+ Doc](https://www.yuque.com/chaofun/tuxun/zl50oaeksnyiqg5n) &nbsp;&nbsp;
@@ -42,12 +45,12 @@ This part concludes how a GeoGuessr NOOB grows.<br>
 
 ## JSON
 ::: tip Released JSON
-[ Yukon JSON ](https://drive.google.com/file/d/1Ex7WfUmrR-psEfOXw1-XbUZFSUjwhAEd) &nbsp;&nbsp;
-[ Ireland Gen 4 JSON ](https://drive.google.com/file/d/1w90GktmDd2rLlixnf7SeHsJOc7-xW4IS)
+- Needs to be updated as 2026 Yukon receives new cov
+[ Yukon JSON ](https://drive.google.com/file/d/1Ex7WfUmrR-psEfOXw1-XbUZFSUjwhAEd) <br>
 :::
 
 ## Extensions
-::: tip Released Javascript
+::: tip Released Extension on Greasyfork
 [ Script for Tuxun Adding BGM and Muting Certain Emojis ](https://greasyfork.org/en/scripts/566268)
 :::
 

@@ -2,6 +2,11 @@ import DefaultTheme from 'vitepress/theme'
 import { nextTick, onMounted } from 'vue'
 import './custom.css'
 import { setupImageZoom, closeImageZoom } from './image-zoom.mjs'
+import {
+  setupImmersive,
+  setImmersiveVisible,
+  resetImmersive
+} from './immersive.mjs'
 
 // ==================== 配置区 ====================
 // 修改以下参数即可调整封面背景图切换效果
@@ -266,6 +271,7 @@ function syncBackground() {
   if (typeof document === 'undefined') return
 
   const isHome = !!document.querySelector('.VPHome')
+  setImmersiveVisible(isHome)
 
   if (isHome && !bgActive) {
     bgActive = true
@@ -290,9 +296,11 @@ export default {
   enhanceApp({ app, router }) {
     if (typeof window !== 'undefined') {
       setupImageZoom()
+      setupImmersive()
 
       router.onAfterRouteChange = async () => {
         closeImageZoom()
+        resetImmersive()
 
         // 等新路由的组件真正渲染到 DOM，再判断是不是首页
         await nextTick()
