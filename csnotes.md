@@ -3,19 +3,19 @@
 
 # cs study
 ::: info Introduction
-这个部分总结了cs noob的学习历程。
+This part shows the tiny results made by a CS NOOB. 
 :::
 ## fuck study
 ::: tip News
-我正试图把我的笔记搬到这上面来。 
+Continue carrying Notes...
 :::
 
 ### Lab Notes
 ::: tip Lab Notes
-👉[0413 实验报告](./lab-notes/0413lab.md)
-👉[0420 实验报告](./lab-notes/0420lab.md)
-👉[0525 实验报告](./lab-notes/0525lab.md)
-👉[0601 实验报告](./lab-notes/0601lab.md)
+👉[0413 Lab Report](./lab-notes/0413lab.md)
+👉[0420 Lab Report](./lab-notes/0420lab.md)
+👉[0525 Lab Report](./lab-notes/0525lab.md)
+👉[0601 Lab Report](./lab-notes/0601lab.md)
 :::
 
 ### Linux
@@ -30,7 +30,7 @@
 
 ## love study
 ::: tip Courses
-我正在上高等数学、计算机系统基础、面向对象程序设计。
+Currently studying data structure and ICS.
 :::
 
 ## my little janky project

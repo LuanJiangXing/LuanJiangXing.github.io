@@ -18,9 +18,10 @@ This part concludes how a GeoGuessr NOOB grows.<br>
 - Namibia [Game](https://www.geoguessr.com/results/30lECdUtNOOjHiBk)
 - South Africa [Game](https://www.geoguessr.com/results/1SmBxLGkxGxfZDBf)
 - Iceland [Game](https://www.geoguessr.com/results/M68qs1HWgGrUamNe)
+- Paraguay [Game](https://www.geoguessr.com/results/yLEgNqHDVS9TNfI1)
 :::
 ::: tip Video Series
-- A series that introduces important and interesting geoguessr-related news in the past 2 weeks [GeoNews](https://space.bilibili.com/1641506378/lists/9207811) [Github REPO](https://github.com/LuanJiangXing/geonews)
+- A series introducing recent important and interesting geoguessr-related news [GeoNews](https://space.bilibili.com/1641506378/lists/9207811) [Github REPO](https://github.com/LuanJiangXing/geonews)
 
 ## Website
 ::: info Community-driven Interactive Geographic Atlas
@@ -33,7 +34,7 @@ This part concludes how a GeoGuessr NOOB grows.<br>
 ::: tip Released Doc
 [ New Zealand Doc ](https://docs.google.com/document/d/1oFOUczWrKdU6wq-OB1CUwyfpKTYxNuCfP_r59WI4DFU) &nbsp;&nbsp;
 [ Fareast RU white A car Doc ](https://www.yuque.com/chaofun/tuxun/ru_fareast)<br>
-[ Translation of New Zealand Doc](https://www.yuque.com/chaofun/tuxun/the_ultimate_guide_to_new_zealand) &nbsp;&nbsp;
+[ Translation of Brainy's New Zealand Doc](https://www.yuque.com/chaofun/tuxun/the_ultimate_guide_to_new_zealand) &nbsp;&nbsp;
 [ Translation of ALR+ Doc](https://www.yuque.com/chaofun/tuxun/zl50oaeksnyiqg5n) &nbsp;&nbsp;
 :::
 
