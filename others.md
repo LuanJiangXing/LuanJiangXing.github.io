@@ -13,7 +13,7 @@
 - [My demo](https://space.bilibili.com/1641506378/lists/9409269)
 :::
 ::: info Cover
-[My cover](https://space.bilibili.com/1641506378/upload/audio)
+- [My cover](https://space.bilibili.com/1641506378/upload/audio)
 ::: 
 
 ## Fitness

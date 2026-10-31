@@ -5,7 +5,6 @@ layout: home
 hero:
   name: "Mountains and Rivers"
   text: "Just take what you need and be on your way"
-  tagline: cs noob
   actions:
     - theme: brand
       text: markdown-examples
@@ -16,16 +15,13 @@ hero:
 
 
 features:
-  - icon: 💻
-    title: study
+  - title: study
     details: cs noob
     link: /csnotes
-  - icon: 🌍
-    title: interests
+  - title: interests
     details: geoguessr and geography-related
     link: /interests/geoguessr
-  - icon: 🚗
-    title: others
+  - title: others
     details: other interesting things
     link: /others
 ---
