@@ -252,12 +252,26 @@ zip xxx.zip
 
 # ssh
 
+
+
+
+
+
 公钥 私钥
 
 公钥众人可见 私钥应当仅自己可见
 
-chmod 600 ~/.ssh
+chmod 设置权限 6=4+2表示自己可读可写 第二位0表示同组用户 第三位0表示其他用户
 
+chmod 600 ~/.ssh/id_ed25519_xxx
+
+chmod 644 ~/.ssh/id_ed25519_xxx.pub
+
+public后缀所以是公钥
+
+生成密钥 
+
+passphrase 
 
 例1
 
@@ -269,3 +283,4 @@ chmod 600 ~/.ssh
 
 本机连接到github
 
+GitHub Settings → SSH and GPG keys → New SSH key
