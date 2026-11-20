@@ -254,6 +254,12 @@ zip xxx.zip
 
 ssh是一种在计算机之间提供加密通信与远程管理的网络协议
 
+ssh username@server
+
+例1 ssh luoyang@server
+
+例2 ssh luoyang@100.100.11.11
+
 ### 公钥私钥
 
 A先把公钥给B，自己放私钥。
@@ -268,17 +274,21 @@ B接收到签名后，用公钥验证该签名，若验证通过则登录成功
 
 公钥众人可见 私钥应当仅自己可见
 
+生成key pair（一旦生成，肯定是生成一对）
+
+ssh-keygen -t ed25519 -C "luoyang" -f ~/.ssh/id_ed25519_luoyang
+
+-f表示filename 如果在有多人、多个ssh key的情况下，为便于管理，通常分开放
+
+passphrase 密码 加强防护用 可以留空
+
 chmod 设置权限 6=4+2 表示自己可读可写 第二位0表示同组用户 第三位0表示其他用户
 
 chmod 600 ~/.ssh/id_ed25519_xxx
 
-chmod 644 ~/.ssh/id_ed25519_xxx.pub
+chmod 644 ~/.ssh/id_ed25519_xxx.pub（public后缀所以是公钥）
 
-public后缀所以是公钥
 
-生成密钥 
-
-passphrase 
 
 
 
