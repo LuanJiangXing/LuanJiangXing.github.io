@@ -249,3 +249,14 @@ unzip xxx.zip
 tar -zcvf
 
 zip xxx.zip
+
+# ssh
+
+例1
+
+本机连接到某服务器
+
+公钥 私钥
+
+本机连接到github
+
