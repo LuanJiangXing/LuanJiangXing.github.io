@@ -302,9 +302,9 @@ chmod 644 ~/.ssh/id_ed25519_xxx.pub（public后缀所以是公钥，所有者读
 
 GitHub Settings → SSH and GPG keys → New SSH key
 
-ssh -T git@github.com
+ssh -T git@github.com 判断本机与github连接是否畅通
 
-最常见使用方式：clone
+最常见使用方式：git clone
 
 git clone git@github.com:owner/repo.git
 
