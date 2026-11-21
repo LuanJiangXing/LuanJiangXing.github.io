@@ -278,24 +278,40 @@ B接收到签名后，用公钥验证该签名，若验证通过则登录成功
 
 ssh-keygen -t ed25519 -C "luoyang" -f ~/.ssh/id_ed25519_luoyang
 
--f表示filename 如果在有多人、多个ssh key的情况下，为便于管理，通常分开放
+-f表示filename 如果在有多人、多个ssh key需要区分的情况下，通常分开放
 
 passphrase 密码 加强防护用 可以留空
+
+如何看到自己的key
+
+cat ~/.ssh/id_ed25519_luoyang
+
+cat ~/.ssh/id_ed25519_luoyang.pub
+
+一般来说ssh-keygen生成的时候权限都会设置好
 
 chmod 设置权限 6=4+2 表示自己可读可写 第二位0表示同组用户 第三位0表示其他用户
 
 chmod 600 ~/.ssh/id_ed25519_xxx
 
-chmod 644 ~/.ssh/id_ed25519_xxx.pub（public后缀所以是公钥）
-
-
-
-
-
-
+chmod 644 ~/.ssh/id_ed25519_xxx.pub（public后缀所以是公钥，所有者读写，其他人可读）
 
 例2
 
 本机连接到github
 
 GitHub Settings → SSH and GPG keys → New SSH key
+
+ssh -T git@github.com
+
+最常见使用方式：clone
+
+git clone git@github.com:owner/repo.git
+
+例3
+
+将远程内网服务映射到本地端口
+
+ssh -L 8125:localhost:8125 server
+
+在本地localhost访问服务器的localhost
